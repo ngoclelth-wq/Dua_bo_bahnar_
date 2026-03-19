@@ -1,0 +1,22 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Helper Functions
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isValidQuestion(data) {
+      return data.q is string && data.q.size() > 0 && data.q.size() < 500 &&
+             data.a is string && data.a.size() > 0 && data.a.size() < 100;
+    }
+
+    match /questions/{questionId} {
+      // For this demo, we allow public read and write to questions
+      // In a real app, you'd restrict write to authenticated teachers
+      allow read: if true;
+      allow create, update: if isValidQuestion(request.resource.data);
+      allow delete: if true;
+    }
+  }
+}

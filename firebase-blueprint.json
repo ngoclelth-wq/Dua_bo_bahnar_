@@ -1,0 +1,31 @@
+{
+  "entities": {
+    "Question": {
+      "title": "Question",
+      "description": "A question for the math game",
+      "type": "object",
+      "properties": {
+        "q": {
+          "type": "string",
+          "description": "The question text"
+        },
+        "a": {
+          "type": "string",
+          "description": "The answer text"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "When the question was created"
+        }
+      },
+      "required": ["q", "a"]
+    }
+  },
+  "firestore": {
+    "questions/{questionId}": {
+      "schema": "Question",
+      "description": "Collection of math questions"
+    }
+  }
+}
